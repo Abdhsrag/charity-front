@@ -1,0 +1,71 @@
+/* src/createProject/style.css */
+
+body {
+  font-family: 'Work Sans', sans-serif;
+  background-color: #FAFAFA;
+  color: #0F1417;
+}
+
+.form-wrapper {
+  background-color: #FAFAFA;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.form-heading {
+  color: #0F1417;
+  margin-bottom: 2rem;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Form group with label and input inside */
+.custom-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  max-width: 648px;
+  min-width: 160px;
+}
+
+.custom-form-group label {
+  color: #0F1417;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Common input/select style */
+.custom-form-group input,
+.custom-form-group select {
+  background-color: #FAFAFA;
+  border: 1px solid #E2E6EB;
+  height: 56px;
+  padding: 15px;
+  border-radius: 12px;
+  font-family: 'Work Sans', sans-serif;
+  width: 100%;
+}
+
+/* Custom textarea */
+.custom-form-group textarea {
+  background-color: #FAFAFA;
+  border: 1px solid #E2E6EB;
+  height: 176px !important;
+  padding: 15px;
+  border-radius: 12px;
+  resize: none;
+  font-family: 'Work Sans', sans-serif;
+  width: 100%;
+}
+
+/* Submit button */
+.btn-submit {
+  background-color: #DCEBFA;
+  color: #0F1417;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 1rem;
+  width: 648px;
+}
