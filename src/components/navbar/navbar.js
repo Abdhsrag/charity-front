@@ -7,8 +7,8 @@ function Navbar  () {
     return(
   <nav className="navbar navbar-expand-lg custom-navbar">
     <div className="container">
-      <Link className="navbar-brand" to="/" style={{ color: "#0F1417" }}>
-        MyApp
+      <Link className="navbar-brand" to="/">
+        Chariytable
       </Link>
       <button
         className="navbar-toggler"

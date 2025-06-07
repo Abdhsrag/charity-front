@@ -3,6 +3,12 @@
     border-bottom: 2px solid #E5E8EB;
 }
 
+.navbar-brand{
+    color: #0F1417 !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
 .navbar-toggler {
     border-color: #0F1417;
 }
