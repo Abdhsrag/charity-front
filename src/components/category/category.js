@@ -15,10 +15,11 @@ function Category() {
     images,
     imageErrors,
     handleImageError,
-    toggleCategory
+    toggleCategory,
   } = useCategoryProjects();
 
-  if (loading) return <div className="text-center py-5">Loading categories...</div>;
+  if (loading)
+    return <div className="text-center py-5">Loading categories...</div>;
   if (error) return <div className="alert alert-danger">Error: {error}</div>;
 
   return (
@@ -40,27 +41,41 @@ function Category() {
                 <div className="card-body p-4">
                   <h2 className="card-title fw-bold">{category.name}</h2>
                   <p className="card-text">{category.description}</p>
-                  <button
-                    onClick={() => toggleCategory(category.id)}
-                    className="btn check-btn"
-                  >
-                    {expandedCategory === category.id
-                      ? "Hide Projects"
-                      : "View Projects"}
-                  </button>
+                  
+                  <div className="d-flex justify-content-between mt-3">
+                    <button
+                      onClick={() => toggleCategory(category.id)}
+                      className="btn check-btn"
+                    >
+                      {expandedCategory === category.id
+                        ? "Hide Projects"
+                        : "View Projects"}
+                    </button>
+                    
+                    <Link 
+                      to="/projects" 
+                      className="btn check-btn"
+                    >
+                      View All Projects <i className="bi bi-arrow-right ms-2"></i>
+                    </Link>
+                  </div>
                 </div>
 
                 {expandedCategory === category.id && (
                   <div className="p-4 bg-light">
                     {projectsLoading ? (
-                      <div className="text-center py-3">Loading projects...</div>
+                      <div className="text-center py-3">
+                        Loading projects...
+                      </div>
                     ) : projectsError ? (
-                      <div className="alert alert-danger">Error: {projectsError}</div>
+                      <div className="alert alert-danger">
+                        Error: {projectsError}
+                      </div>
                     ) : projects.length > 0 ? (
-                      <div className="row g-4">
+                      <div className="row g-3"> 
                         {projects.map((project) => (
-                          <div key={project.id} className="col-md-6 col-lg-4">
-                            <div className="card h-100 border-0 rounded-4 overflow-hidden shadow-sm">
+                          <div key={project.id} className="col-md-6 col-lg-4 col-xl-3"> 
+                            <div className="card h-100 border-0 rounded-3 overflow-hidden shadow-sm"> 
                               <img
                                 src={
                                   imageErrors[project.id]
@@ -70,18 +85,20 @@ function Category() {
                                 alt={project.title}
                                 onError={() => handleImageError(project.id)}
                                 className="card-img-top object-fit-cover"
-                                style={{ height: "200px" }}
+                                style={{ height: "150px" }} 
                               />
-                              <div className="card-body">
-                                <h3 className="card-title fw-bold">{project.title}</h3>
-                                <p className="card-text">
+                              <div className="card-body p-3"> 
+                                <h3 className="card-title fw-bold h5"> 
+                                  {project.title}
+                                </h3>
+                                <p className="card-text small"> 
                                   {project.details || project.description}
                                 </p>
                               </div>
-                              <div className="card-footer bg-transparent border-0">
+                              <div className="card-footer bg-transparent border-0 p-3"> 
                                 <Link
                                   to={`/project/${project.id}`}
-                                  className="btn donate-btn w-100"
+                                  className="btn donate-btn w-100 btn-sm" 
                                 >
                                   View Details
                                 </Link>
@@ -101,9 +118,7 @@ function Category() {
             </div>
           ))
         ) : (
-          <div className="col-12 text-center py-5">
-            No categories found
-          </div>
+          <div className="col-12 text-center py-5">No categories found</div>
         )}
       </div>
     </section>

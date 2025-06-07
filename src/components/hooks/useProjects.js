@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
-const API_BASE = 'http://127.0.0.1:8000/api/project/project';
+const API_BASE = "http://127.0.0.1:8000/api/project/project";
 
 export const useProjects = (endpoint) => {
   const [projects, setProjects] = useState([]);
@@ -61,7 +61,7 @@ export const useProjectImages = (projects) => {
   }, [projects, fetchProjectImage]);
 
   const handleImageError = useCallback((projectId) => {
-    setImageErrors(prev => ({ ...prev, [projectId]: true }));
+    setImageErrors((prev) => ({ ...prev, [projectId]: true }));
   }, []);
 
   return { images, imageErrors, handleImageError };
@@ -78,10 +78,14 @@ export const useProjectsByCategory = (categoryId) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`http://localhost:8000/api/categories/${categoryId}/projects/`);
-      if (!response.ok) throw new Error(`Failed to fetch projects for category ${categoryId}`);
+      const response = await fetch(
+        `http://localhost:8000/api/categories/${categoryId}/projects/`
+      );
+      if (!response.ok)
+        throw new Error(`Failed to fetch projects for category ${categoryId}`);
       const data = await response.json();
-      setProjects(data.data || data); 
+      const limitedProjects = (data.data || data).slice(0, 4);
+      setProjects(limitedProjects);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -102,7 +106,7 @@ export const useCategoryProjects = () => {
   const { images, imageErrors, handleImageError } = useProjectImages(projects);
 
   const toggleCategory = useCallback((categoryId) => {
-    setExpandedCategory(prev => prev === categoryId ? null : categoryId);
+    setExpandedCategory((prev) => (prev === categoryId ? null : categoryId));
   }, []);
 
   return {
@@ -113,6 +117,6 @@ export const useCategoryProjects = () => {
     images,
     imageErrors,
     handleImageError,
-    toggleCategory
+    toggleCategory,
   };
 };
