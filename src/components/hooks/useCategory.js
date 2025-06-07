@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
-function useCategory  () {
+function useCategory() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/categories/");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const data = await response.json();
-        if (!Array.isArray(data)) {
-          throw new Error("Expected an array of categories");
-        }
-
-        setCategories(data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError(err.message);
-        setCategories([]);
-      } finally {
-        setLoading(false);
-      }
+    const fetchCategories = () => {
+      axios.get("http://localhost:8000/api/categories/")
+        .then(response => {
+          if (!Array.isArray(response.data)) {
+            throw new Error("Expected an array of categories");
+          }
+          setCategories(response.data);
+          setError(null);
+        })
+        .catch(err => {
+          console.error("Fetch error:", err);
+          setError(err.message);
+          setCategories([]);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     };
 
     fetchCategories();
