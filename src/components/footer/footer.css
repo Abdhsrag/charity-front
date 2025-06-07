@@ -1,0 +1,35 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f8f9fa; 
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.footer-link, .footer-logo-link {
+  color: #333;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-logo {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  color: #666;
+}

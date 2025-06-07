@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Navbar from "./components/navbar/navbar";
 import Home from "./components/home/home";
-
+import Footer from "./components/footer/footer";
 function App() {
   return (
     <div className="App">
@@ -12,9 +12,9 @@ function App() {
         <Router>
           <Navbar />
           <Switch>
-            <Route path="/" component={Home} exact>
-            </Route>
+            <Route path="/" component={Home} exact/>
           </Switch>
+          <Footer />
         </Router>
       </header>
     </div>
