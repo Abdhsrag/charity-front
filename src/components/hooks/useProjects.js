@@ -66,3 +66,53 @@ export const useProjectImages = (projects) => {
 
   return { images, imageErrors, handleImageError };
 };
+
+export const useProjectsByCategory = (categoryId) => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchProjectsByCategory = useCallback(async () => {
+    if (!categoryId) return;
+
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch(`http://localhost:8000/api/categories/${categoryId}/projects/`);
+      if (!response.ok) throw new Error(`Failed to fetch projects for category ${categoryId}`);
+      const data = await response.json();
+      setProjects(data.data || data); 
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [categoryId]);
+
+  useEffect(() => {
+    fetchProjectsByCategory();
+  }, [fetchProjectsByCategory]);
+
+  return { projects, loading, error, refetch: fetchProjectsByCategory };
+};
+
+export const useCategoryProjects = () => {
+  const [expandedCategory, setExpandedCategory] = useState(null);
+  const { projects, loading, error } = useProjectsByCategory(expandedCategory);
+  const { images, imageErrors, handleImageError } = useProjectImages(projects);
+
+  const toggleCategory = useCallback((categoryId) => {
+    setExpandedCategory(prev => prev === categoryId ? null : categoryId);
+  }, []);
+
+  return {
+    expandedCategory,
+    projects,
+    loading,
+    error,
+    images,
+    imageErrors,
+    handleImageError,
+    toggleCategory
+  };
+};

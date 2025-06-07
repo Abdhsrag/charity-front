@@ -1,0 +1,32 @@
+.check-btn {
+    background-color: #DBE8F2;
+    color: #0F1417;
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+
+.colorCard{
+    background: #d5e6ed;
+background: linear-gradient(90deg, rgba(213, 230, 237, 1) 0%, rgba(199, 211, 235, 1) 50%, rgba(137, 215, 232, 1) 100%);
+}
+
+.check-btn:hover {
+    background-color: #EBEDF2;
+    color: #0F1417;
+}
+
+.donate-btn {
+    background-color: #EBEDF2;
+    color: #0F1417;
+    border: none;
+    border-radius: 25px;
+}
+
+.donate-btn:hover {
+    background-color: #DBE8F2;
+    color: #0F1417;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}

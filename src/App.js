@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Navbar from "./components/navbar/navbar";
 import Home from "./components/home/home";
 import Footer from "./components/footer/footer";
+import Category from "./components/category/category";
 function App() {
   return (
     <div className="App">
@@ -13,6 +14,7 @@ function App() {
           <Navbar />
           <Switch>
             <Route path="/" component={Home} exact/>
+            <Route path="/categories" component={Category} exact/>
           </Switch>
           <Footer />
         </Router>
