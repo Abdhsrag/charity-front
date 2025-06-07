@@ -1,0 +1,28 @@
+.hero {
+  height: 60vh;
+  color: #fff;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.impact h4 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.get-involved {
+  background-color: #f8f9fa;
+}
+
+.get-involved .btn {
+  min-width: 140px;
+  border-radius: 25px;
+}
+
+.stories .card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+}
