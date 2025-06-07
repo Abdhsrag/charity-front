@@ -1,0 +1,38 @@
+.custom-navbar {
+    background-color: #fff;
+    border-bottom: 2px solid #E5E8EB;
+}
+
+.navbar-toggler {
+    border-color: #0F1417;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(15,20,23, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.custom-nav-link {
+    color: #0F1417 !important;
+}
+
+.custom-nav-link:hover,
+.custom-nav-link:focus,
+.custom-nav-link.active {
+    font-weight: bold;
+    text-decoration: none;
+    color: #0F1417 !important;
+}
+
+.donate-btn {
+    background-color: #DBE8F2;
+    color: #0F1417;
+    border: none;
+    border-radius: 20px;
+}
+
+.login-btn {
+    background-color: #EBEDF2;
+    color: #0F1417;
+    border: none;
+    border-radius: 20px;
+}
