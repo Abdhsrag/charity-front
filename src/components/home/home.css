@@ -73,6 +73,12 @@
     font-weight: bold;
 }
 
+.impact-item{
+    background-color: #EBEDF2 !important;
+    border-radius: 15px;
+    padding: 20px;
+}
+
 .get-involved {
     background-color: #f8f9fa;
 }
