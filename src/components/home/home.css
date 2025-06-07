@@ -1,28 +1,89 @@
 .hero {
-  height: 60vh;
-  color: #fff;
+    background-image: url('../../../public/assets/hero.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60vh;
+    color: #fff;
+}
+
+.hero .container>button,
+.donate-btn {
+    background-color: #EBEDF2;
+    color: #0F1417;
+    border: none;
+    border-radius: 20px;
+}
+
+.hero .container>button:hover,
+.donate-btn:hover {
+    background-color: #DBE8F2;
+    color: #0F1417;
+}
+
+.volunteer-btn {
+    background-color: #DBE8F2;
+    color: #0F1417;
+}
+
+.volunteer-btn:hover {
+    background-color: #EBEDF2;
+    color: #0F1417;
+}
+
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1rem;
 }
 
 .card-title {
-  font-weight: bold;
+    font-weight: bold;
+}
+
+.carousel .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.carousel .card-title {
+    font-weight: bold;
+}
+
+.carousel .btn {
+    background-color: #EBEDF2;
+    color: #0F1417;
+    border: none;
+    border-radius: 25px;
+    min-width: 140px;
+}
+
+.carousel .btn:hover {
+    background-color: #DBE8F2;
+    color: #0F1417;
 }
 
 .impact h4 {
-  font-size: 2rem;
-  font-weight: bold;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .get-involved {
-  background-color: #f8f9fa;
+    background-color: #f8f9fa;
 }
 
 .get-involved .btn {
-  min-width: 140px;
-  border-radius: 25px;
+    min-width: 140px;
+    border-radius: 25px;
 }
 
 .stories .card {
-  border: none;
-  border-radius: 15px;
-  overflow: hidden;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
 }
