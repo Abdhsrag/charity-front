@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import './ContactUs.css'
 
-
 const ContactUs= () =>{
     const[formdata,setformdata]=useState(
         {
@@ -88,7 +87,6 @@ return(
         <button type="submit" className="btn">Send</button>
     </form>
      {status && <p className="status">{status}</p>}
-     <footer/>
     </div>
 </div>
 );

@@ -20,6 +20,7 @@
   color: #007bff;
   transition: color 0.5s;
   padding: 10px;
+  font-size: 20px;
 }
 
 .footer a:hover {
