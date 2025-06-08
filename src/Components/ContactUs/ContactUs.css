@@ -1,0 +1,73 @@
+.container{
+ max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.questions{
+ margin-bottom: 40px;
+}
+.qitem{
+      margin: 15px 0;
+}
+.questionlab{
+    font-weight: bold;
+  display: block;
+  cursor: pointer;
+
+}
+
+.answer{
+    margin-left: 20px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-left: 3px solid #007bff;
+  border-radius: 5px;
+
+}
+.section{
+border-top: 1px solid #ccc;
+ padding-top: 30px;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+}
+
+.input , .textarea{
+ padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+}
+
+.textarea{
+     height: 120px;
+  resize: vertical
+
+}
+
+.btn{
+     background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+
+}
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.status{
+ color: green;
+  margin-top: 15px;
+  font-weight: bold;
+}
