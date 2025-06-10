@@ -1,0 +1,16 @@
+body { font-family: 'Work Sans', sans-serif; background: #FAFAFA; }
+.page-container { display: flex; gap: 2rem; }
+.sidebar {
+  width: 280px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.owner-photo { width: 120px; height: 120px; border-radius: 50%; }
+.main-content { flex: 1; padding: 1rem; }
+.image-slider img { width: 100%; height: auto; margin-bottom: 1rem; }
+.cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin:2rem 0; }
+.card { background: #EBEDF2; padding: 1rem; border-radius: 8px; text-align: center; font-size: 1.2rem; }
+button { background: #DBE8F2; border: none; padding: 0.8rem 1.6rem; color: #000; border-radius: 6px; }
+button:hover { opacity: 0.9; }
+.comments-section .comment { background: #fff; padding:0.8rem; margin-bottom:0.8rem; border-radius:6px; }
