@@ -7,7 +7,7 @@ import ProjectDetails from './projectDetails/ProjectDetails';
 
 function App() {
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NTE0NDI1LCJpYXQiOjE3NDk1MTQxMjUsImp0aSI6Ijk2YTJkNGJhYmU2YzQ3Njg4ZWMzZGNmYTY4OTM2OGE3IiwidXNlcl9pZCI6MSwiZW1haWwiOiIzbGEyLmE3bWVkNDFAZ21haWwuY29tIiwicm9sZSI6ImRvbm9yIn0.28agQ2MAiPt0bL8y9FMukWJLIL1meh-rCwSUtq3JYLg';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NTkyMjcwLCJpYXQiOjE3NDk1OTE5NzAsImp0aSI6IjM2MDMxZmVhMjM1NjRiNDRhZWQ2N2Y1OWUzODc3YjExIiwidXNlcl9pZCI6MSwiZW1haWwiOiIzbGEyLmE3bWVkNDFAZ21haWwuY29tIiwicm9sZSI6ImRvbm9yIn0.o9Z8hOqxM4w9S8qZmcGxBgVMczuqQpFsODJ6DFICN-4';
 
   return (
       <Router>

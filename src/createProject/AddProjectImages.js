@@ -11,17 +11,17 @@ const AddProjectImages = ({ token }) => {
 
   // Fetch project title by ID
   useEffect(() => {
-  axios
-    .get(`http://localhost:8000/api/project/project/${projectId}/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      setProjectTitle(res.data.title);
-    })
-    .catch((err) => console.error("Error fetching project:", err));
-}, [projectId, token]);
+    axios
+      .get(`http://localhost:8000/api/project/project/${projectId}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setProjectTitle(res.data.title);
+      })
+      .catch((err) => console.error("Error fetching project:", err));
+  }, [projectId, token]);
 
   const handleFileChange = (e) => {
     setSelectedFiles([...e.target.files]);
@@ -29,7 +29,6 @@ const AddProjectImages = ({ token }) => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-
 
   if (!selectedFiles.length) {
     alert("Please select at least one image.");
@@ -39,24 +38,31 @@ const AddProjectImages = ({ token }) => {
   try {
     for (let file of selectedFiles) {
       const formData = new FormData();
-      formData.append("url", file); // ✅ match Django's image field
-      formData.append("project_id", projectId); // ✅ match expected field
+      formData.append("url", file); // Must be a File object
+      formData.append("project_id", Number(projectId)); // Ensure it's a number
 
-      await axios.post("http://localhost:8000/api/project-images/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/project-images/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Success response:", response.data);
     }
 
-    alert("Upload successful!");
+    alert("All images uploaded successfully!");
     navigate(`/project/${projectId}`);
   } catch (err) {
-    console.error("Upload error:", err);
-    alert("Upload failed. Check console for details.");
+    console.error("Upload error:", err.response?.data || err.message);
+    alert(`Upload failed. ${JSON.stringify(err.response?.data)}`);
   }
 };
+
 
 
   return (
