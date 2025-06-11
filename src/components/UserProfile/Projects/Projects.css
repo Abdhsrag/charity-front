@@ -1,0 +1,78 @@
+.projects-container {
+  padding: 2rem;
+  font-family: "Work Sans", sans-serif;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.projects-title {
+  color: #0f1417;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.no-projects {
+  font-size: 1.1rem;
+  color: #5c738a;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  border: 1px solid #dbe8f2;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 8px rgba(92, 115, 138, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-title {
+  font-size: 1.2rem;
+  color: #5c738a;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.project-description {
+  font-size: 1rem;
+  color: #0f1417;
+  margin-bottom: 0.8rem;
+}
+
+.project-date {
+  font-size: 0.9rem;
+  color: #5c738a;
+  margin-bottom: 0.5rem;
+}
+
+.project-status {
+  font-size: 0.9rem;
+  color: #0f1417;
+}
+
+.status-badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.status-badge.active {
+  background-color: #d1f7d6;
+  color: #1e7f34;
+}
+
+.status-badge.inactive {
+  background-color: #ffe0e0;
+  color: #c62828;
+}

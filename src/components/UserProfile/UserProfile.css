@@ -1,0 +1,15 @@
+/* src/components/UserProfile/UserProfile.css */
+
+.userprofile-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Work Sans", sans-serif;
+  background-color: #fafafa;
+}
+
+.userprofile-content {
+  margin-left: 220px; /* Width of Sidebar */
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+}

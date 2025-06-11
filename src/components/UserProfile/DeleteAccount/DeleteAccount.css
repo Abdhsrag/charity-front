@@ -1,0 +1,33 @@
+.confirm-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #ffecec;
+  border: 1px solid #e63946;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.confirm-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.delete-button {
+  background-color: #e63946;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c62828;
+}
+
+.cancel-button {
+  background-color: #5c738a;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #495d6e;
+}

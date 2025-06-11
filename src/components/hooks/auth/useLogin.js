@@ -1,8 +1,12 @@
 // src/components/hooks/auth/useLogin.js
+
 import { useState, useCallback } from "react";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 const API_URL = "http://127.0.0.1:8000/api/user/login/";
+const RESEND_ACTIVATION_URL =
+  "http://127.0.0.1:8000/api/user/resend-activation/";
 
 export const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -26,11 +30,44 @@ export const useLogin = () => {
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
 
+      // Decode token to get user_id
+      const decoded = jwtDecode(response.data.access);
+      localStorage.setItem("user_id", decoded.user_id);
+
       setSuccess(true);
       setMessage("Login successful!");
     } catch (err) {
+      console.error("Login error:", err);
       setError(err.response?.data || err.message);
-      setMessage(err.response?.data?.detail || "Login failed.");
+
+      const detail = err.response?.data?.detail;
+      console.log("Login error detail:", detail);
+
+      setMessage(detail || "Login failed.");
+
+      // AUTOMATIC resend if needed:
+      const detailMessage = Array.isArray(detail) ? detail[0] : detail;
+
+      if (
+        detailMessage &&
+        typeof detailMessage === "string" &&
+        detailMessage.toLowerCase().includes("activate")
+      ) {
+        try {
+          await axios.post(
+            RESEND_ACTIVATION_URL,
+            { email: formData.email },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log("Activation email resent automatically.");
+        } catch (resendErr) {
+          console.error("Failed to resend activation email:", resendErr);
+        }
+      }
     } finally {
       setLoading(false);
     }

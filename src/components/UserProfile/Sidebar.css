@@ -1,0 +1,71 @@
+/* src/components/UserProfile/Sidebar.css */
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 220px;
+  background-color: #dbe8f2;
+  padding: 1.5rem 1rem;
+  font-family: "Work Sans", sans-serif;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f1417;
+  margin-bottom: 2rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  text-decoration: none;
+  color: #5c738a;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-link:hover {
+  background-color: #fafafa;
+  color: #0f1417;
+}
+
+.sidebar-link.active {
+  background-color: #5c738a;
+  color: #fafafa;
+}
+/* Sidebar.css */
+.sidebar-link {
+  display: block;
+  padding: 12px 20px;
+  color: #0f1417;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+  background-color: #dbe8f2;
+}
+
+.active-link {
+  background-color: #5c738a;
+  color: white;
+}
+
+.delete-link {
+  color: #e63946;
+}
+
+.delete-link:hover {
+  background-color: #fcd8db;
+}
