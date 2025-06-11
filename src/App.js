@@ -6,11 +6,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Navbar from "./components/navbar/navbar";
 import Home from "./components/home/home";
 import Footer from "./components/footer/footer";
-import ContactUs from './Components/ContactUs/ContactUs';
-import  './Components/ContactUs/ContactUs.css';
-import './Components/Footer/Footer.css';
-import AboutUs from './Components/About/AboutUs';
-import NotFound from './Components/NotFound/NotFound';
+import ContactUs from './components/ContactUs/ContactUs';
+import  './components/ContactUs/ContactUs.css';
+import AboutUs from './components/About/AboutUs';
+import NotFound from './components/NotFound/NotFound';
 
 
 function App() {
