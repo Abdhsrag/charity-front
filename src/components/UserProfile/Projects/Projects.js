@@ -57,19 +57,38 @@ const Projects = () => {
         {projects.map((project) => (
           <div key={project.id} className="project-card">
             <h3 className="project-title">{project.title}</h3>
-            <p className="project-description">{project.description}</p>
-            <p className="project-date">
-              Created: {new Date(project.created_at).toLocaleDateString()}
+            <p className="project-details">{project.details}</p>
+            <p className="project-target">Target: ${project.target}</p>
+            <p className="project-start-date">
+              Start Date:{" "}
+              {project.S_time
+                ? new Date(project.S_time).toLocaleDateString()
+                : "N/A"}
+            </p>
+            <p className="project-end-date">
+              End Date:{" "}
+              {project.E_time
+                ? new Date(project.E_time).toLocaleDateString()
+                : "N/A"}
+            </p>
+            <p className="project-featured">
+              Featured: {project.is_featured ? "Yes" : "No"}
             </p>
             <p className="project-status">
               Status:{" "}
               <span
                 className={`status-badge ${
-                  project.status === "active" ? "active" : "inactive"
+                  project.is_cancle ? "inactive" : "active"
                 }`}
               >
-                {project.status}
+                {project.is_cancle ? "Cancelled" : "Active"}
               </span>
+            </p>
+            <p className="project-rating">
+              Avg Rating: {project.average_rating}
+            </p>
+            <p className="project-category">
+              Category ID: {project.category_id}
             </p>
           </div>
         ))}
