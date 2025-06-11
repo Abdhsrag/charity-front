@@ -1,0 +1,50 @@
+.overview-container {
+  padding: 2rem;
+  font-family: "Work Sans", sans-serif;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.overview-title {
+  color: #0f1417;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.overview-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.overview-card {
+  border: 1px solid #dbe8f2;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 8px rgba(92, 115, 138, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  color: #5c738a;
+  margin-bottom: 0.8rem;
+}
+
+.stats-card h4 {
+  font-size: 1.1rem;
+  color: #0f1417;
+  margin-bottom: 0.5rem;
+}
+
+.stats-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #5c738a;
+}

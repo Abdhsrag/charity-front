@@ -30,7 +30,7 @@ const Login = () => {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
-        history.push("/forgot-password"); // or "/home"
+        history.push("/user"); // or "/home"
       }, 1000);
 
       return () => clearTimeout(timer);
