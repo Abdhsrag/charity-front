@@ -1,6 +1,4 @@
-// src/components/UserProfile/UserProfile.js
-import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom"; 
 import Sidebar from "./Sidebar";
 import Overview from "./Overview/Overview";
 import Projects from "./Projects/Projects";
@@ -15,14 +13,14 @@ const UserProfile = () => {
     <div className="userprofile-container">
       <Sidebar />
       <div className="userprofile-content">
-        <Switch>
-          <Route path="/user/overview" component={Overview} />
-          <Route path="/user/projects" component={Projects} />
-          <Route path="/user/comments" component={Comments} />
-          <Route path="/user/settings" component={Settings} />
-          <Route path="/user/delete-account" component={DeleteAccount} />
-          <Redirect exact from="/user" to="/user/overview" />
-        </Switch>
+        <Routes>
+          <Route path="/user/overview" element={<Overview />} />
+          <Route path="/user/projects" element={<Projects />} />
+          <Route path="/user/comments" element={<Comments />} />
+          <Route path="/user/settings" element={<Settings />} />
+          <Route path="/user/delete-account" element={<DeleteAccount />} />
+          <Route path="/user" element={<Navigate to="/user/overview" replace />} />
+        </Routes>
       </div>
     </div>
   );

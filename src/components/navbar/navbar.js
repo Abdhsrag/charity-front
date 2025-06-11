@@ -1,5 +1,5 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link } from "react-router-dom";
 import "./navbar.css";
 
@@ -24,7 +24,7 @@ function Navbar  () {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ms-auto align-items-center">
           <li className="nav-item">
-            <Link className="nav-link custom-nav-link" to="/">Home</Link>
+            <Link className="nav-link custom-nav-link" to="/home">Home</Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link custom-nav-link" to="/categories">Categories</Link>

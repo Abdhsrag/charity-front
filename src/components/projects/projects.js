@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import MyProject from "./myproject";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import Search from "./search";
 
@@ -71,7 +71,7 @@ function Getprojects() {
             {filteredProjects.map((project) => (
               <Link
                 style={{ textDecoration: "none" }}
-                to={`/projectDetails/${project.id}`}
+                to={`/project/${project.id}`}
                 className="col-md-3 mb-4"
                 key={project.id}
               >
