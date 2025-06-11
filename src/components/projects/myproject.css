@@ -1,0 +1,39 @@
+/* Import the Work Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap');
+
+.card {
+  width: 18rem;
+  margin: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: 'Work Sans';
+}
+
+.card-img-top {
+  border-radius: 8px 8px 0 0;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #343a40;
+  text-decoration: none;
+
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+
+.card:hover {
+  transform: translateY(-5px);
+}
+.card-tags {
+  margin-top: 10px;
+}
