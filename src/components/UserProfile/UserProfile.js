@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom"; 
+import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Overview from "./Overview/Overview";
 import Projects from "./Projects/Projects";
@@ -14,12 +14,12 @@ const UserProfile = () => {
       <Sidebar />
       <div className="userprofile-content">
         <Routes>
-          <Route path="/user/overview" element={<Overview />} />
-          <Route path="/user/projects" element={<Projects />} />
-          <Route path="/user/comments" element={<Comments />} />
-          <Route path="/user/settings" element={<Settings />} />
-          <Route path="/user/delete-account" element={<DeleteAccount />} />
-          <Route path="/user" element={<Navigate to="/user/overview" replace />} />
+          <Route path="overview" element={<Overview />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="comments" element={<Comments />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="delete-account" element={<DeleteAccount />} />
+          <Route path="" element={<Navigate to="overview" replace />} />
         </Routes>
       </div>
     </div>

@@ -32,7 +32,8 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
-            <Route path="/user" element={<UserProfile />} />
+            <Route path="/user/*" element={<UserProfile />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/activate/:uid/:token" alement={<ActivateAccount />} />
