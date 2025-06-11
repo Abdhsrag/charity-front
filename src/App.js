@@ -23,9 +23,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Category from "./components/category/category";
 
 function App() {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NTkyMjcwLCJpYXQiOjE3NDk1OTE5NzAsImp0aSI6IjM2MDMxZmVhMjM1NjRiNDRhZWQ2N2Y1OWUzODc3YjExIiwidXNlcl9pZCI6MSwiZW1haWwiOiIzbGEyLmE3bWVkNDFAZ21haWwuY29tIiwicm9sZSI6ImRvbm9yIn0.o9Z8hOqxM4w9S8qZmcGxBgVMczuqQpFsODJ6DFICN-4";
-
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjQ3NDg3LCJpYXQiOjE3NDk2NDcxODcsImp0aSI6ImNhZTFhODI3MWU0YjRiNWU5MTAxY2VjNmYyNDkyNjgyIiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.TraEJ7r-KYTrxjhxXhy2d7a9bz2VNUJW0cIg2FidmNk";
   return (
     <div className="App">
       <header className="App-header">
@@ -42,8 +40,8 @@ function App() {
               path="/reset-password/:uid/:token"
               element={<ResetPassword />}
             />
-            <Route path="/categories" element={<Category />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/categories" element={<Category token={token} />} />
+            <Route path="/home" element={<Home token={token} />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/projects" element={<Projects />} />

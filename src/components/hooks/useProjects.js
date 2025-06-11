@@ -3,14 +3,16 @@ import axios from "axios";
 
 const API_BASE = "http://127.0.0.1:8000/api/project/project";
 
-export const useProjects = (endpoint) => {
+export const useProjects = (endpoint, token) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchProjects = useCallback(() => {
     setLoading(true);
-    axios.get(`${API_BASE}${endpoint}`)
+    axios.get(`${API_BASE}${endpoint}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(response => {
         setProjects(response.data.data || response.data);
         setError(null);
@@ -21,7 +23,7 @@ export const useProjects = (endpoint) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [endpoint]);
+  }, [endpoint, token]);
 
   useEffect(() => {
     fetchProjects();
@@ -30,12 +32,14 @@ export const useProjects = (endpoint) => {
   return { projects, loading, error, refetch: fetchProjects };
 };
 
-export const useProjectImages = (projects) => {
+export const useProjectImages = (projects, token) => {
   const [images, setImages] = useState({});
   const [imageErrors, setImageErrors] = useState({});
 
   const fetchProjectImage = useCallback((projectId) => {
-    return axios.get(`${API_BASE}/${projectId}/details/`)
+    return axios.get(`${API_BASE}/${projectId}/details/`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(res => {
         return res.data.images && res.data.images.length > 0 ? res.data.images[0] : null;
       })
@@ -43,7 +47,7 @@ export const useProjectImages = (projects) => {
         console.error(`Error fetching image for project ${projectId}:`, error);
         return null;
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (projects.length === 0) return;
@@ -71,7 +75,7 @@ export const useProjectImages = (projects) => {
   return { images, imageErrors, handleImageError };
 };
 
-export const useProjectsByCategory = (categoryId) => {
+export const useProjectsByCategory = (categoryId, token) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -81,7 +85,9 @@ export const useProjectsByCategory = (categoryId) => {
 
     setLoading(true);
     setError(null);
-    axios.get(`http://localhost:8000/api/categories/${categoryId}/projects/`)
+    axios.get(`http://localhost:8000/api/categories/${categoryId}/projects/`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(response => {
         const limitedProjects = (response.data.data || response.data).slice(0, 4);
         setProjects(limitedProjects);
@@ -92,7 +98,7 @@ export const useProjectsByCategory = (categoryId) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [categoryId]);
+  }, [categoryId, token]);
 
   useEffect(() => {
     fetchProjectsByCategory();
@@ -101,10 +107,10 @@ export const useProjectsByCategory = (categoryId) => {
   return { projects, loading, error, refetch: fetchProjectsByCategory };
 };
 
-export const useCategoryProjects = () => {
+export const useCategoryProjects = (token) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
-  const { projects, loading, error } = useProjectsByCategory(expandedCategory);
-  const { images, imageErrors, handleImageError } = useProjectImages(projects);
+  const { projects, loading, error } = useProjectsByCategory(expandedCategory, token);
+  const { images, imageErrors, handleImageError } = useProjectImages(projects, token);
 
   const toggleCategory = useCallback((categoryId) => {
     setExpandedCategory((prev) => (prev === categoryId ? null : categoryId));

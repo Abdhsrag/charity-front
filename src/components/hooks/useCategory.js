@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function useCategory() {
+function useCategory(token) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCategories = () => {
-      axios.get("http://localhost:8000/api/categories/")
+      axios.get("http://localhost:8000/api/categories/", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
         .then(response => {
           if (!Array.isArray(response.data)) {
             throw new Error("Expected an array of categories");
@@ -27,7 +29,7 @@ function useCategory() {
     };
 
     fetchCategories();
-  }, []);
+  }, [token]);
 
   return { categories, loading, error };
 };

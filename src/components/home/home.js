@@ -9,22 +9,22 @@ import StoriesSection from "../common/stories";
 import CategoryCards from "../common/categoryCards";
 import { Link } from "react-router-dom";
 
-function Home() {
-  const { projects: featuredProjects } = useProjects("/fivefeatured/");
-  const { projects: latestProjects } = useProjects("/projects_latest/");
-  const { categories, loading, error } = useCategory();
+function Home({ token }) {
+  const { projects: featuredProjects } = useProjects("/fivefeatured/", token);
+  const { projects: latestProjects } = useProjects("/projects_latest/", token);
+  const { categories, loading, error } = useCategory(token);
 
   const {
     images: featuredImages,
     imageErrors: featuredErrors,
     handleImageError: handleFeaturedError,
-  } = useProjectImages(featuredProjects);
+  } = useProjectImages(featuredProjects, token);
 
   const {
     images: latestImages,
     imageErrors: latestErrors,
     handleImageError: handleLatestError,
-  } = useProjectImages(latestProjects);
+  } = useProjectImages(latestProjects, token);
 
   return (
     <div className="home">

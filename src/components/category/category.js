@@ -28,8 +28,8 @@ const ProjectCard = ({ project, image, imageError, onImageError }) => (
   </div>
 );
 
-function Category() {
-  const { categories, loading, error } = useCategory();
+function Category({ token }) {
+  const { categories, loading, error } = useCategory(token);
   const {
     expandedCategory,
     projects,
@@ -39,7 +39,7 @@ function Category() {
     imageErrors,
     handleImageError,
     toggleCategory,
-  } = useCategoryProjects();
+  } = useCategoryProjects(token);
 
   if (loading) return <div className="text-center py-5">Loading categories...</div>;
   if (error) return <div className="alert alert-danger">Error: {error}</div>;
