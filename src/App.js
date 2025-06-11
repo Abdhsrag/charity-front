@@ -10,6 +10,7 @@ import ContactUs from './components/ContactUs/ContactUs';
 import  './components/ContactUs/ContactUs.css';
 import AboutUs from './components/About/AboutUs';
 import NotFound from './components/NotFound/NotFound';
+import Projects from "./components/projects/projects";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/contactus" element={<ContactUs/>}/>
             <Route path="/about" element={<AboutUs />}/>
+            <Routes path="/projects" element={<Projects/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
       <Footer/>
