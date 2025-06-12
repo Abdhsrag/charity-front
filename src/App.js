@@ -7,7 +7,7 @@ import Navbar from "./components/navbar/navbar";
 import Home from "./components/home/home";
 import Footer from "./components/footer/footer";
 import ContactUs from "./components/ContactUs/ContactUs";
-// import "./components/ContactUs/ContactUs.css";
+import "./components/ContactUs/ContactUs.css";
 import AboutUs from "./components/About/AboutUs";
 import NotFound from "./components/NotFound/NotFound";
 import Projects from "./components/projects/projects";
@@ -34,7 +34,7 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/activate/:uid/:token" alement={<ActivateAccount />} />
+            <Route path="/activate/:uid/:token" element={<ActivateAccount />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/reset-password/:uid/:token"

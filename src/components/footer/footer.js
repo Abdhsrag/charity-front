@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-links">
-        <a href="/contact" className="footer-link">
+        <a href="/contactus" className="footer-link">
           Contact Us
         </a>
         <a href="/about" className="footer-link">

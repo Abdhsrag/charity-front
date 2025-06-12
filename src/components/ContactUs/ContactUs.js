@@ -58,7 +58,7 @@ const Submit=(e)=>{
     setselectquestion([])
 };
 return(
-    <div className="container">
+    <div className="parent">
 
     <div className="questions">
          <h1 className="header">Help Center</h1>
@@ -84,7 +84,7 @@ return(
         <input type="text" name="name" placeholder="Enter your name" value={formdata.name} onChange={Change} required className="input"/>
         <input type="email" name="email" placeholder="Enter your email" value={formdata.email} onChange={Change} required className="input"/>
         <textarea name="message" placeholder="Enter your message" value={formdata.message} onChange={Change} required className="textarea"/>
-        <button type="submit" className="btn">Send</button>
+        <button type="submit" className="send">Send</button>
     </form>
      {status && <p className="status">{status}</p>}
     </div>

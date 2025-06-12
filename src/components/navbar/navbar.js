@@ -44,7 +44,7 @@ function Navbar() {
               <Link className="nav-link custom-nav-link" to="/about">About</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link custom-nav-link" to="/contact">Contact</Link>
+              <Link className="nav-link custom-nav-link" to="/contactus">Contact</Link>
             </li>
             
             {/* Show Donate button for all users */}
