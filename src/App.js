@@ -23,7 +23,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Category from "./components/category/category";
 
 function App() {
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjQ3NDg3LCJpYXQiOjE3NDk2NDcxODcsImp0aSI6ImNhZTFhODI3MWU0YjRiNWU5MTAxY2VjNmYyNDkyNjgyIiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.TraEJ7r-KYTrxjhxXhy2d7a9bz2VNUJW0cIg2FidmNk";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NzQzOTMwLCJpYXQiOjE3NDk3NDM2MzAsImp0aSI6Ijc2ZmFlZDZlYjlmMzQ1NjNiN2ZkMDliN2Q3ZDk2NTRmIiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.Y84_aMu2Px5P4gUK-drsqsPmVgdAd4lNGEKPE_nvNyY";
   return (
     <div className="App">
       <header className="App-header">

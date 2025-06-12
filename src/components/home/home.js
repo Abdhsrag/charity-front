@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 function Home({ token }) {
   const { projects: featuredProjects } = useProjects("/fivefeatured/", token);
   const { projects: latestProjects } = useProjects("/projects_latest/", token);
+  const { projects: topRatedProjects } = useProjects("/top_rated/", token);
   const { categories, loading, error } = useCategory(token);
 
   const {
@@ -25,6 +26,12 @@ function Home({ token }) {
     imageErrors: latestErrors,
     handleImageError: handleLatestError,
   } = useProjectImages(latestProjects, token);
+
+  const {
+    images: topRatedImages,
+    imageErrors: topRatedErrors,
+    handleImageError: handleTopRatedError,
+  } = useProjectImages(topRatedProjects, token);
 
   return (
     <div className="home">
@@ -74,6 +81,23 @@ function Home({ token }) {
           imageErrors={latestErrors}
           onImageError={handleLatestError}
           carouselId="latestCarousel"
+          fadeEffect={true}
+        />
+      </section>
+
+      <section className="projects container my-5">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2 className="mb-4">Top Rated Projects</h2>
+          <Link to="/projects" className="btn check-btn">
+            View All Projects <i className="bi bi-arrow-right ms-2"></i>
+          </Link>
+        </div>
+        <ProjectCarousel
+          projects={topRatedProjects}
+          images={topRatedImages}
+          imageErrors={topRatedErrors}
+          onImageError={handleTopRatedError}
+          carouselId="topRatedCarousel"
           fadeEffect={true}
         />
       </section>
