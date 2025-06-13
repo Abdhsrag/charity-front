@@ -1,11 +1,10 @@
-// src/components/UserProfile/Sidebar.js
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen }) => {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <h2 className="sidebar-title">Dashboard</h2>
       <nav className="sidebar-nav">
         <NavLink

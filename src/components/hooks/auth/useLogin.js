@@ -33,7 +33,10 @@ export const useLogin = () => {
       // Decode token to get user_id
       const decoded = jwtDecode(response.data.access);
       localStorage.setItem("user_id", decoded.user_id);
-
+      localStorage.setItem("email", decoded.email || "");
+      localStorage.setItem("role", decoded.role || "");
+      localStorage.setItem("first_name", decoded.fname || "");
+      localStorage.setItem("last_name", decoded.lname || "");
       setSuccess(true);
       setMessage("Login successful!");
     } catch (err) {

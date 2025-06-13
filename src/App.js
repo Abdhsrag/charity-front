@@ -21,9 +21,10 @@ import ForgotPassword from "./components/Auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/Auth/ResetPassword/ResetPassword";
 import UserProfile from "./components/UserProfile/UserProfile";
 import Category from "./components/category/category";
-
+import { useAuth } from "./components/hooks/auth/useAuth";
 function App() {
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5Nzk5NjM1LCJpYXQiOjE3NDk3OTkzMzUsImp0aSI6Ijk5ZTU2MGYyMTY2NTRlZTY4ZGFlOGFiZTlmYjQxZDMwIiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.YGHnI1PIvSN0fRlf2DDwdX5QWPjUTj3Ty2Sm8HXxmmg";
+  const { token, user_id, email, role } = useAuth();
+  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5Nzk5NjM1LCJpYXQiOjE3NDk3OTkzMzUsImp0aSI6Ijk5ZTU2MGYyMTY2NTRlZTY4ZGFlOGFiZTlmYjQxZDMwIiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.YGHnI1PIvSN0fRlf2DDwdX5QWPjUTj3Ty2Sm8HXxmmg";
   return (
     <div className="App">
       <header className="App-header">

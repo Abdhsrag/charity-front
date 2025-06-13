@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Overview from "./Overview/Overview";
@@ -9,10 +10,23 @@ import DeleteAccount from "./DeleteAccount/DeleteAccount";
 import "./UserProfile.css";
 
 const UserProfile = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="userprofile-container">
-      <Sidebar />
-      <div className="userprofile-content">
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="hamburger-btn"
+      >
+        ☰
+      </button>
+
+      <Sidebar isOpen={sidebarOpen} />
+
+      <div
+        className="userprofile-content"
+        onClick={() => setSidebarOpen(false)} // auto-close sidebar on content click
+      >
         <Routes>
           <Route path="overview" element={<Overview />} />
           <Route path="projects" element={<Projects />} />

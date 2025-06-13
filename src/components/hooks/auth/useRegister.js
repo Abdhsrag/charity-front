@@ -34,6 +34,8 @@ export const useRegister = () => {
         response.data.detail ||
           "Registration successful! Please check your email."
       );
+      localStorage.setItem("first_name", formData.fname || "");
+      localStorage.setItem("last_name", formData.lname || "");
     } catch (err) {
       setError(err.response?.data || err.message);
       setMessage(

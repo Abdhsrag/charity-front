@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Projects.css";
-
+import { Link } from "react-router-dom";
 const Projects = () => {
   const user_id = localStorage.getItem("user_id");
   const accessToken = localStorage.getItem("accessToken");
@@ -90,6 +90,14 @@ const Projects = () => {
             <p className="project-category">
               Category ID: {project.category_id}
             </p>
+            <Link
+              to={`/project/${project.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <button className="btn btn-primary w-100 mt-2">
+                Show Details
+              </button>
+            </Link>
           </div>
         ))}
       </div>

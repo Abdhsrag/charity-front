@@ -1,15 +1,34 @@
-/* src/components/UserProfile/UserProfile.css */
-
 .userprofile-container {
   display: flex;
-  height: 100vh;
-  font-family: "Work Sans", sans-serif;
-  background-color: #fafafa;
+  min-height: calc(100vh - 72px - 80px);
 }
 
 .userprofile-content {
-  margin-left: 220px; /* Width of Sidebar */
-  padding: 2rem;
   flex: 1;
   overflow-y: auto;
+  padding: 2rem;
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin: 10px;
+  color: #0f1417;
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 10px;
+  z-index: 1001;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  .userprofile-container {
+    flex-direction: column;
+  }
 }
