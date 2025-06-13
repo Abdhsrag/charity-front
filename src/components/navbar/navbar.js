@@ -32,7 +32,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-center">
             <li className="nav-item">
-              <Link className="nav-link custom-nav-link" to="/home">Home</Link>
+              <Link className="nav-link custom-nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link custom-nav-link" to="/categories">Categories</Link>
@@ -45,6 +45,9 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link className="nav-link custom-nav-link" to="/contactus">Contact</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link custom-nav-link" to="/create-project">Create Project</Link>
             </li>
             
             {/* Show Donate button for all users */}
