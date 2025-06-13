@@ -39,6 +39,9 @@ export const useLogin = () => {
       localStorage.setItem("last_name", decoded.lname || "");
       setSuccess(true);
       setMessage("Login successful!");
+
+      // Reload page to refresh nav and token display and redirect to home page
+      window.location.href = "/";
     } catch (err) {
       console.error("Login error:", err);
       setError(err.response?.data || err.message);
