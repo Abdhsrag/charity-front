@@ -13,7 +13,7 @@ import NotFound from "./components/NotFound/NotFound";
 import Projects from "./components/projects/projects";
 import CreateProjectForm from "./createProject/CreateProjectForm";
 import AddProjectImages from "./createProject/AddProjectImages";
-import ProjectDetails from "./components/projects/projectDetails";
+import ProjectDetails from "./projectDetails/ProjectDetails";
 import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import ActivateAccount from "./components/Auth/ActivateAccount/ActivateAccount";
@@ -23,7 +23,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Category from "./components/category/category";
 
 function App() {
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NzQ0NzE3LCJpYXQiOjE3NDk3NDQ0MTcsImp0aSI6Ijg0N2IyM2RmN2RiMDQ0NTc4MzlkOTA0ODQ3ZTgwNmI1IiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.lG8OeL76LVu2I0QY7LNPMaj-7pRKbGaYpMmvJTi-uHM";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5Nzk4NzAwLCJpYXQiOjE3NDk3OTg0MDAsImp0aSI6ImMzMzFkNGNhMjc2MDQ0ZjRhNGY0ZGE4MzgxNzUyYzYwIiwidXNlcl9pZCI6MSwiZW1haWwiOiJhYmRoc3JhZ0BnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifQ.BPhEal7f4SzLTU0Sqqc2O7MNCD5blOg1AKcbRPcvhRw";
   return (
     <div className="App">
       <header className="App-header">
