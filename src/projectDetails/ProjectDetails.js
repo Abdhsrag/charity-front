@@ -11,21 +11,17 @@ import {
   Form,
   Alert,
   Carousel,
-  Nav,
-  Navbar,
   Spinner,
+  Modal,
 } from "react-bootstrap";
 import {
-  Heart,
   Users,
   Calendar,
-  Mail,
-  Phone,
-  Target,
   MessageCircle,
-  Share2,
   BookOpen,
   Award,
+  Flag,
+  Reply,
 } from "lucide-react";
 import "../App.css";
 
@@ -52,71 +48,328 @@ const ProjectDetails = ({ token }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertVariant, setAlertVariant] = useState("success");
+  const [newComment, setNewComment] = useState("");
+  const [replyContent, setReplyContent] = useState("");
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [showReportProjectModal, setShowReportProjectModal] = useState(false);
+  const [showReportCommentModal, setShowReportCommentModal] = useState(false);
+  const [reportDescription, setReportDescription] = useState("");
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
 
   const projectId = window.location.pathname.split("/").filter(Boolean).pop();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const baseUrl = "http://127.0.0.1:8000";
 
-        const baseUrl = "http://127.0.0.1:8000";
-        const [projectRes, donationsRes, commentsRes, imagesRes] =
-          await Promise.all([
-            fetch(`${baseUrl}/api/project/project/${projectId}/details/`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-            fetch(`${baseUrl}/api/donation/by-project/${projectId}/`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-            fetch(`${baseUrl}/api/comments/by-project/${projectId}/`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-            fetch(`${baseUrl}/api/project-images/for-project/${projectId}/`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-          ]);
+      // Fetch project, donations, and images first
+      const [projectRes, donationsRes, imagesRes] = await Promise.all([
+        fetch(`${baseUrl}/api/project/project/${projectId}/details/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch(`${baseUrl}/api/donation/by-project/${projectId}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch(`${baseUrl}/api/project-images/for-project/${projectId}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      ]);
 
-        if (!projectRes.ok) throw new Error("Failed to load project data");
-        if (!donationsRes.ok) throw new Error("Failed to load donations data");
+      if (!projectRes.ok) throw new Error("Failed to load project data");
+      if (!donationsRes.ok) throw new Error("Failed to load donations data");
 
-        const responseData = await projectRes.json();
-        const project = responseData.project;
-        const owner = project.owner || responseData.owner || {};
+      const responseData = await projectRes.json();
+      const project = responseData.project;
+      const owner = project.owner || responseData.owner || {};
+      const imagesData = await imagesRes.json();
+      const donations = await donationsRes.json();
 
-        const imagesData = await imagesRes.json();
+      // Then fetch comments with replies
+      const comments = await fetchCommentsWithReplies();
 
-        setProjectData((prev) => ({
-          ...prev,
-          ...project,
-          target: Number(project.target) || 0,
-          images: imagesData.data || [], // <- Update here
-          owner: {
-            ...prev.owner,
-            ...owner,
-          },
-        }));
+      setProjectData({
+        ...project,
+        target: Number(project.target) || 0,
+        images: imagesData.data || [],
+        owner: { ...owner },
+      });
 
-        const donations = await donationsRes.json();
-        const comments = commentsRes.ok ? await commentsRes.json() : [];
+      setDonationsData(donations || []);
+      setCommentsData(comments || []);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        setDonationsData(donations || []);
-        setCommentsData(comments || []);
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError(err.message);
-        setIsLoading(false);
-      }
+  fetchData();
+}, [projectId, token]);
+
+const fetchCommentsWithReplies = async () => {
+  try {
+    const commentsRes = await fetch(
+      `http://localhost:8000/api/comments/by-project/${projectId}/`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    if (!commentsRes.ok) throw new Error("Failed to load comments");
+
+    const comments = await commentsRes.json();
+
+    // Fetch replies for each comment in parallel
+    const commentsWithReplies = await Promise.all(
+      comments.map(async (comment) => {
+        try {
+          const repliesRes = await fetch(
+            `http://localhost:8000/api/comments/replies/${comment.id}/`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          const replies = repliesRes.ok ? await repliesRes.json() : [];
+          return { ...comment, replies };
+        } catch (err) {
+          console.error(`Error fetching replies for comment ${comment.id}:`, err);
+          return { ...comment, replies: [] };
+        }
+      })
+    );
+
+    return commentsWithReplies;
+  } catch (err) {
+    console.error("Error fetching comments:", err);
+    setError("Failed to load comments");
+    return [];
+  }
+};
+
+
+
+
+
+  const fetchReplies = async (commentId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/comments/replies/${commentId}/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!response.ok) throw new Error("Failed to load replies");
+      return await response.json();
+    } catch (err) {
+      console.error("Error fetching replies:", err);
+      return [];
+    }
+  };
+
+  const decodeToken = (token) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      console.error("Error decoding token:", e);
+      return null;
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    const decodedToken = decodeToken(token);
+    if (!decodedToken) {
+      showAlertMessage("Invalid authentication", "danger");
+      return;
+    }
+
+    // Optimistic update
+    const tempComment = {
+      id: Date.now(),
+      content: newComment,
+      user_id: decodedToken.user_id,
+      created_at: new Date().toISOString(),
+      user: { first_name: "", last_name: "" },
+      replies: []
     };
 
-    fetchData();
-  }, [projectId, token]);
+    setCommentsData([tempComment, ...commentsData]);
+    setNewComment("");
 
-  // Safe value formatting
-  const formatCurrency = (value) => {
-    if (value === undefined || value === null) return "$0";
-    return `$${parseFloat(value).toLocaleString()}`;
+    try {
+      const response = await fetch("http://localhost:8000/api/comments/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          content: newComment,
+          project_id: parseInt(projectId),
+          user_id: decodedToken.user_id,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to post comment");
+
+      // Refresh comments after successful post
+      await fetchCommentsWithReplies();
+      showAlertMessage("Comment posted successfully!", "success");
+    } catch (err) {
+      // Rollback optimistic update
+      setCommentsData(commentsData.filter(c => c.id !== tempComment.id));
+      showAlertMessage("Failed to post comment: " + err.message, "danger");
+    }
+  };
+
+  const handleReplySubmit = async (e) => {
+    e.preventDefault();
+    if (!replyContent.trim() || !replyingTo) return;
+
+    const decodedToken = decodeToken(token);
+    if (!decodedToken) {
+      showAlertMessage("Invalid authentication", "danger");
+      return;
+    }
+
+    // Optimistic update
+    const tempReply = {
+      id: Date.now(),
+      content: replyContent,
+      user_id: decodedToken.user_id,
+      created_at: new Date().toISOString(),
+      user: { first_name: "", last_name: "" }
+    };
+
+    setCommentsData(commentsData.map(comment => 
+      comment.id === replyingTo
+        ? { ...comment, replies: [...comment.replies, tempReply] }
+        : comment
+    ));
+    setReplyContent("");
+    setReplyingTo(null);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/comments/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          content: replyContent,
+          project_id: parseInt(projectId),
+          user_id: decodedToken.user_id,
+          parent: replyingTo,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to post reply");
+
+      // Refresh comments after successful post
+      await fetchCommentsWithReplies();
+      showAlertMessage("Reply posted successfully!", "success");
+    } catch (err) {
+      // Rollback optimistic update
+      setCommentsData(commentsData.map(comment => 
+        comment.id === replyingTo
+          ? { ...comment, replies: comment.replies.filter(r => r.id !== tempReply.id) }
+          : comment
+      ));
+      showAlertMessage("Failed to post reply: " + err.message, "danger");
+    }
+  };
+
+   const renderComments = () => {
+    if (commentsData.length === 0) {
+      return (
+        <p className="text-muted text-center py-4">
+          No comments yet. Be the first to show your support!
+        </p>
+      );
+    }
+
+    return commentsData.map((comment) => (
+      <React.Fragment key={comment.id}>
+        <Card className="mb-3">
+          <Card.Body>
+            <div className="d-flex justify-content-between align-items-start">
+              <Card.Title>
+                {comment.user?.first_name} {comment.user?.last_name}
+              </Card.Title>
+              <Button 
+                variant="outline-danger" 
+                size="sm"
+                onClick={() => openReportCommentModal(comment.id)}
+              >
+                <Flag size={16} />
+              </Button>
+            </div>
+            <Card.Text>{comment.content}</Card.Text>
+            <div className="d-flex justify-content-between align-items-center">
+             {/* <small className="text-muted">
+                {new Date(comment.created_at).toLocaleString()}
+              </small>*/}
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => setReplyingTo(comment.id === replyingTo ? null : comment.id)}
+              >
+                <Reply size={16} className="me-1" />
+                {comment.id === replyingTo ? "Cancel" : "Reply"}
+              </Button>
+            </div>
+
+            {replyingTo === comment.id && (
+              <Form onSubmit={handleReplySubmit} className="mt-3">
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                  placeholder={`Reply to ${comment.user?.first_name}...`}
+                  required
+                />
+                <div className="d-flex justify-content-end mt-2">
+                  <Button variant="primary" size="sm" type="submit">
+                    Post Reply
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Card.Body>
+        </Card>
+
+        {/* Replies section */}
+        {comment.replies?.length > 0 && (
+          <div className="ms-4">
+            {comment.replies.map((reply) => (
+              <Card key={reply.id} className="mb-3">
+                <Card.Body>
+                  <div className="d-flex justify-content-between align-items-start">
+                    <Card.Title>
+                      {reply.user?.first_name} {reply.user?.last_name}
+                    </Card.Title>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => openReportCommentModal(reply.id)}
+                    >
+                      <Flag size={16} />
+                    </Button>
+                  </div>
+                  <Card.Text>{reply.content}</Card.Text>
+                 {/* <small className="text-muted">
+                    {new Date(reply.created_at).toLocaleString()}
+                  </small>*/}
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
+        )}
+      </React.Fragment>
+    ));
   };
 
   const handleDonate = async (e) => {
@@ -143,7 +396,6 @@ const ProjectDetails = ({ token }) => {
 
       if (!response.ok) throw new Error("Donation failed");
 
-      // Refresh donations
       const donationsRes = await fetch(
         `http://127.0.0.1:8000/api/donation/by-project/${projectId}/`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -155,6 +407,80 @@ const ProjectDetails = ({ token }) => {
     } catch (err) {
       showAlertMessage("Donation failed: " + err.message, "danger");
     }
+  };
+
+  const handleReportProject = async () => {
+    if (!reportDescription.trim()) {
+      showAlertMessage("Please enter a report description", "danger");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/project-reports/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            description: reportDescription,
+            date: new Date().toISOString().split("T")[0],
+            user_id: 1,
+            project_id: parseInt(projectId),
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to submit project report");
+
+      setReportDescription("");
+      setShowReportProjectModal(false);
+      showAlertMessage("Project report submitted successfully!", "success");
+    } catch (err) {
+      showAlertMessage("Failed to submit report: " + err.message, "danger");
+    }
+  };
+
+  const handleReportComment = async () => {
+    if (!reportDescription.trim() || !selectedCommentId) {
+      showAlertMessage("Please enter a report description", "danger");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/comment-reports/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            description: reportDescription,
+            date: new Date().toISOString().split("T")[0],
+            user: 1,
+            comment: selectedCommentId,
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to submit comment report");
+
+      setReportDescription("");
+      setSelectedCommentId(null);
+      setShowReportCommentModal(false);
+      showAlertMessage("Comment report submitted successfully!", "success");
+    } catch (err) {
+      showAlertMessage("Failed to submit report: " + err.message, "danger");
+    }
+  };
+
+  const openReportCommentModal = (commentId) => {
+    setSelectedCommentId(commentId);
+    setShowReportCommentModal(true);
   };
 
   const showAlertMessage = (message, variant) => {
@@ -184,6 +510,11 @@ const ProjectDetails = ({ token }) => {
     </div>
   );
 
+  const formatCurrency = (value) => {
+    if (value === undefined || value === null) return "$0";
+    return `$${parseFloat(value).toLocaleString()}`;
+  };
+
   if (isLoading) {
     return (
       <Container
@@ -210,7 +541,6 @@ const ProjectDetails = ({ token }) => {
     );
   }
 
-  // Calculate metrics with fallbacks
   const totalAmount = donationsData.reduce(
     (sum, d) => sum + (parseFloat(d?.amount) || 0),
     0
@@ -227,8 +557,6 @@ const ProjectDetails = ({ token }) => {
     (totalAmount / (projectData.target || 1)) * 100
   );
 
-  console.log("Project Response:", projectData);
-
   return (
     <div className="bg-light min-vh-100">
       <Container className="py-4">
@@ -241,6 +569,70 @@ const ProjectDetails = ({ token }) => {
             {alertMessage}
           </Alert>
         )}
+
+        <Modal
+          show={showReportProjectModal}
+          onHide={() => setShowReportProjectModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Report Project</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                placeholder="Explain why you're reporting this project..."
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowReportProjectModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleReportProject}>
+              Submit Report
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={showReportCommentModal}
+          onHide={() => setShowReportCommentModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Report Comment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                placeholder="Explain why you're reporting this comment..."
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowReportCommentModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleReportComment}>
+              Submit Report
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         <Row className="g-4">
           <Col lg={4}>
@@ -404,7 +796,7 @@ const ProjectDetails = ({ token }) => {
                           borderRadius: "8px",
                         }}
                         onError={(e) => {
-                          e.target.src = "/image-fallback.png"; // ✅ Better fallback
+                          e.target.src = "/image-fallback.png";
                         }}
                       />
                     </Carousel.Item>
@@ -424,6 +816,15 @@ const ProjectDetails = ({ token }) => {
                 <p className="lead text-muted lh-lg">
                   {projectData.details || "No project details available"}
                 </p>
+                <div className="d-flex justify-content-end">
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => setShowReportProjectModal(true)}
+                  >
+                    <Flag size={16} className="me-1" /> Report Project
+                  </Button>
+                </div>
               </Card.Body>
             </Card>
 
@@ -463,31 +864,33 @@ const ProjectDetails = ({ token }) => {
             </Row>
 
             <Card className="shadow-sm mb-4">
-              <Card.Header className="bg-white">
-                <h3 className="mb-0">
-                  <MessageCircle size={24} className="me-2 text-primary" />{" "}
-                  Community Support ({commentsData.length})
-                </h3>
-              </Card.Header>
-              <Card.Body>
-                {commentsData.length === 0 ? (
-                  <p className="text-muted text-center py-4">
-                    No comments yet. Be the first to show your support!
-                  </p>
-                ) : (
-                  commentsData.map((comment) => (
-                    <Card className="mb-3" key={comment.id}>
-                      <Card.Body>
-                        <Card.Title>
-                          {comment.user?.first_name} {comment.user?.last_name}
-                        </Card.Title>
-                        <Card.Text>{comment.content}</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  ))
-                )}
-              </Card.Body>
-            </Card>
+        <Card.Header className="bg-white">
+          <h3 className="mb-0">
+            <MessageCircle size={24} className="me-2 text-primary" />{" "}
+            Community Support ({commentsData.length})
+          </h3>
+        </Card.Header>
+        <Card.Body>
+          <Form onSubmit={handleCommentSubmit} className="mb-4">
+                  <Form.Group>
+                    <Form.Label>Add a comment</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                      placeholder="Share your thoughts about this project..."
+                    />
+                  </Form.Group>
+                  <div className="d-flex justify-content-end mt-2">
+                    <Button variant="primary" type="submit">
+                      Post Comment
+                    </Button>
+                  </div>
+                 </Form>
+          {renderComments()}
+        </Card.Body>
+      </Card>
           </Col>
         </Row>
       </Container>
