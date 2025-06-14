@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import MyProject from "./myproject";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import Search from "./search";
 
-function Getprojects() {
+function Projects({ token }) {  
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,13 +15,14 @@ function Getprojects() {
       try {
         setLoading(true);
 
+        const headers = {
+          Authorization: `Bearer ${token}`
+        };
+
         const [projectRes, imagesRes, tagsRes] = await Promise.all([
-          // axios.get("http://localhost:8000/api/project/project/"),
-          // axios.get("http://localhost:8000/api/project-images/"),
-          // axios.get("http://localhost:8000/api/project-tags/"),
-          axios.get("https://retoolapi.dev/1WxneP/data"),
-          axios.get("https://retoolapi.dev/7fdxy6/data"),
-          axios.get("https://retoolapi.dev/hsZZxp/data"),
+          axios.get("http://localhost:8000/api/project/project/", { headers }),
+          axios.get("http://localhost:8000/api/project-images/", { headers }),
+          axios.get("http://localhost:8000/api/project-tags/", { headers }),
         ]);
 
         const projects = projectRes.data;
@@ -51,8 +51,10 @@ function Getprojects() {
       }
     };
 
-    fetchProjects();
-  }, []);
+    if (token) { 
+      fetchProjects();
+    }
+  }, [token]); 
 
   return (
     <div className="container">
@@ -85,4 +87,4 @@ function Getprojects() {
   );
 }
 
-export default Getprojects;
+export default Projects;

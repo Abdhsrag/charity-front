@@ -45,7 +45,7 @@ function App() {
             <Route path="/" element={<Home token={token} />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects" element={<Projects token={token} />} />
             <Route
               path="/create-project"
               element={<CreateProjectForm token={token} />}
