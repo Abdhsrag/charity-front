@@ -9,6 +9,7 @@ import Footer from "./components/footer/footer";
 import ContactUs from "./components/ContactUs/ContactUs";
 import "./components/ContactUs/ContactUs.css";
 import AboutUs from "./components/About/AboutUs";
+import "./components/About/AboutUs.css"
 import NotFound from "./components/NotFound/NotFound";
 import Projects from "./components/projects/projects";
 import CreateProjectForm from "./createProject/CreateProjectForm";
