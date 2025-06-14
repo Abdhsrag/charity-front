@@ -21,7 +21,7 @@ function Search({ projects, setFilteredProjects }) {
       <input
         type="text"
         className="form-control"
-        placeholder="Search by name or tag..."
+        placeholder="Search for project..."
         value={searchTerm}
         onChange={handleSearch}
       />

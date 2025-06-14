@@ -14,10 +14,8 @@ function MyProject({ project }) {
         <Card.Body>
           <Card.Title className="card-title">{project.title}</Card.Title>
           <Card.Text className="card-text">{project.details}</Card.Text>
-          <Card.Text className="card-tags">
-            {project.tags && project.tags.map((tag, i) => (
-              <span key={i} className="badge bg-secondary me-1">{tag}</span>
-            ))}
+          <Card.Text className="card-target">
+            Target: ${project.target}
           </Card.Text>
         </Card.Body>
       </Card>
