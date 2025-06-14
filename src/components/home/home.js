@@ -10,9 +10,13 @@ import CategoryCards from "../common/categoryCards";
 import { Link } from "react-router-dom";
 
 function Home({ token }) {
-  const { projects: featuredProjects } = useProjects("/fivefeatured/", token);
+  const { projects: allProjects } = useProjects("/", token);
+  const featuredProjects = allProjects.filter(project => !project.is_cancle).slice(0, 5);
   const { projects: latestProjects } = useProjects("/projects_latest/", token);
-  const { projects: topRatedProjects } = useProjects("/top_rated/", token);
+  const topRatedProjects = allProjects
+    .filter(project => !project.is_cancle)
+    .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+    .slice(0, 5);
   const { categories, loading, error } = useCategory(token);
 
   const {

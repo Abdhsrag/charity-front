@@ -14,7 +14,7 @@ export const useProjects = (endpoint, token) => {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        setProjects(response.data.data || response.data);
+        setProjects((response.data.data || response.data).filter(project => !project.is_cancle));
         setError(null);
       })
       .catch(err => {
@@ -52,17 +52,13 @@ export const useProjectImages = (projects, token) => {
   useEffect(() => {
     if (projects.length === 0) return;
 
-    const fetchAllImages = () => {
+    const fetchAllImages = async () => {
       const imagesMap = {};
-      Promise.all(
-        projects.map((project) => {
-          return fetchProjectImage(project.id).then(image => {
-            imagesMap[project.id] = image;
-          });
-        })
-      ).then(() => {
-        setImages(imagesMap);
-      });
+      for (const project of projects) {
+        const image = await fetchProjectImage(project.id);
+        imagesMap[project.id] = image;
+      }
+      setImages(imagesMap);
     };
 
     fetchAllImages();
@@ -89,7 +85,7 @@ export const useProjectsByCategory = (categoryId, token) => {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        const limitedProjects = (response.data.data || response.data).slice(0, 4);
+        const limitedProjects = (response.data.data || response.data).filter(project => !project.is_cancle).slice(0, 4);
         setProjects(limitedProjects);
       })
       .catch(err => {

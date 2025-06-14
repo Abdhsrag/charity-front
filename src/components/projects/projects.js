@@ -6,12 +6,13 @@ import { useProjects, useProjectImages } from "../../components/hooks/useProject
 
 function Projects({ token }) {
   const { projects, loading, error } = useProjects("/", token);
-  const { images, imageErrors, handleImageError } = useProjectImages(projects, token);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   React.useEffect(() => {
-    setFilteredProjects(projects);
+    setFilteredProjects(projects.filter(project => !project.is_cancle));
   }, [projects]);
+
+  const { images, imageErrors, handleImageError } = useProjectImages(filteredProjects, token);
 
   if (error) {
     console.error("Error fetching projects:", error);
